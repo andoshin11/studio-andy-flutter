@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studio_andy_app/bloc/post_provider.dart';
 import 'package:studio_andy_app/ui/post_card.dart';
+import 'package:studio_andy_app/entities/post.dart';
 
 class IndexPage extends StatelessWidget {
   IndexPage();
@@ -24,8 +25,12 @@ class IndexPage extends StatelessWidget {
 
                     return ListView(
                         children: snapshot.data
-                            .map<Widget>((item) => new PostCard(
+                            .map<Widget>((Post item) => new PostCard(
                                   post: item,
+                                  headerImage: postBloc.assets.value.firstWhere(
+                                      (asset) =>
+                                          asset.id ==
+                                          item.headerImageLight.sys.id),
                                 ))
                             .toList());
                   }))

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:studio_andy_app/entities/post.dart';
+import 'package:studio_andy_app/entities/asset.dart';
 
 class PostCard extends StatelessWidget {
-  PostCard({@required this.post});
+  PostCard({@required this.post, this.headerImage});
 
   final Post post;
+  final Asset headerImage;
 
   Widget _buildDate() {
     Widget text;
@@ -75,6 +77,26 @@ class PostCard extends StatelessWidget {
     );
   }
 
+  Widget _buildHeader(BuildContext context) {
+    var queryData = MediaQuery.of(context);
+    var width = queryData.size.width - 40.0;
+    var height = width / 2;
+
+    Widget image;
+    if (headerImage?.url.isNotEmpty) {
+      image = new Image.network('https:${headerImage.url}', fit: BoxFit.cover);
+    } else {
+      image = new Image.network(
+          'http://livedoor.blogimg.jp/ps3jp/imgs/8/f/8f2a9178.jpg');
+    }
+
+    return Container(
+      child: image,
+      width: width,
+      height: height,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Card(
@@ -83,8 +105,9 @@ class PostCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       margin: EdgeInsets.only(bottom: 40.0, left: 20.0, right: 20.0),
       child: Column(
-        children: <Widget>[_buildBody()],
+        children: <Widget>[_buildHeader(context), _buildBody()],
       ),
+      clipBehavior: Clip.antiAlias,
     );
   }
 }
