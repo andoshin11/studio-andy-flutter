@@ -9,7 +9,11 @@ class ContentfulGateway {
     var res = await APIClient.request(new APIRequest(
         path:
             '/spaces/${DotEnv().env['CTF_SPACE_ID']}/environments/master/entries',
-        params: {'access_token': DotEnv().env['CTF_CDA_ACCESS_TOKEN']},
+        params: {
+          'access_token': DotEnv().env['CTF_CDA_ACCESS_TOKEN'],
+          'order': '-fields.publishedAt',
+          'content_type': 'post'
+        },
         method: HTTPMethod.GET));
 
     var posts =
