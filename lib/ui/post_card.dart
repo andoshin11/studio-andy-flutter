@@ -51,7 +51,8 @@ class PostCard extends StatelessWidget {
         ));
       }
       _tagList.add(new CupertinoButton(
-        child: new Text(post.tags[i], style: TextStyle(fontSize: 14.0)),
+        child: new Text(post.tags[i],
+            style: TextStyle(fontSize: 14.0, color: Colors.black54)),
         onPressed: () {
           print('${post.tags[i]} is pressed');
         },
