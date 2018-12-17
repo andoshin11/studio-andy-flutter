@@ -11,31 +11,33 @@ class IndexPage extends StatelessWidget {
     final postBloc = PostProvider.of(context);
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.grey[200],
-      body: new Column(
-        children: <Widget>[
-          new Expanded(
-              child: StreamBuilder(
-                  stream: postBloc.posts,
-                  builder: (context, snapshot) {
-                    if (snapshot.data?.isEmpty ?? true) {
-                      return Center(child: Text('Empty'));
-                    }
+        resizeToAvoidBottomPadding: false,
+        backgroundColor: Colors.grey[200],
+        body: new Container(
+          padding: EdgeInsets.only(top: 20.0),
+          child: new Column(
+            children: <Widget>[
+              new Expanded(
+                  child: StreamBuilder(
+                      stream: postBloc.posts,
+                      builder: (context, snapshot) {
+                        if (snapshot.data?.isEmpty ?? true) {
+                          return Center(child: Text('Empty'));
+                        }
 
-                    return ListView(
-                        children: snapshot.data
-                            .map<Widget>((Post item) => new PostCard(
-                                  post: item,
-                                  headerImage: postBloc.assets.value.firstWhere(
-                                      (asset) =>
-                                          asset.id ==
-                                          item.headerImageLight.sys.id),
-                                ))
-                            .toList());
-                  }))
-        ],
-      ),
-    );
+                        return ListView(
+                            children: snapshot.data
+                                .map<Widget>((Post item) => new PostCard(
+                                      post: item,
+                                      headerImage: postBloc.assets.value
+                                          .firstWhere((asset) =>
+                                              asset.id ==
+                                              item.headerImageLight.sys.id),
+                                    ))
+                                .toList());
+                      }))
+            ],
+          ),
+        ));
   }
 }
